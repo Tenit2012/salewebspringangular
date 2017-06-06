@@ -12,7 +12,7 @@
 
         function loadDetail() {
             $scope.loading = true;
-            apiService.get('/api/applicationUser/detail/' + $stateParams.id, null,
+            apiService.get('http://localhost:8080/api/applicationUser/detail/' + $stateParams.id, null,
             function (result) {
                 $scope.account = result.data;
                 $scope.account.BirthDay = new Date($scope.account.BirthDay);

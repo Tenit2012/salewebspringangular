@@ -3,9 +3,9 @@
 
     app.controller('applicationUserListController', applicationUserListController);
 
-    applicationUserListController.$inject = ['$scope', 'apiService', 'notificationService', '$ngBootbox'];
+    applicationUserListController.$inject = ['$scope', 'apiService', 'notificationService', '$ngBootbox','urls'];
 
-    function applicationUserListController($scope, apiService, notificationService, $ngBootbox) {
+    function applicationUserListController($scope, apiService, notificationService, $ngBootbox,urls) {
         $scope.loading = true;
         $scope.data = [];
         $scope.page = 0;
@@ -22,7 +22,7 @@
                             id: id
                         }
                     }
-                    apiService.del('/api/applicationUser/delete', config, function () {
+                    apiService.del('http://localhost:8080/api/applicationUser/delete', config, function () {
                         notificationService.displaySuccess('Đã xóa thành công.');
                         search();
                     },
@@ -32,18 +32,19 @@
                 });
         }
         function search(page) {
-            page = page || 0;
+        	if(page===undefined)
+            page =  0;
 
             $scope.loading = true;
             var config = {
                 params: {
                     page: page,
                     pageSize: 5,
-                    filter: $scope.filterExpression
+//                    filter: $scope.filterExpression
                 }
             }
 
-            apiService.get('api/applicationUser/getlistpaging', config, dataLoadCompleted, dataLoadFailed);
+            apiService.get('http://localhost:8080/api/applicationUser/getlistpaging', config, dataLoadCompleted, dataLoadFailed);
         }
 
         function dataLoadCompleted(result) {

@@ -2,14 +2,14 @@
 (function (app) {
     'use strict';
 
-    app.service('loginService', ['$http', '$q', 'authenticationService', 'authData', 'apiService',
-        function ($http, $q, authenticationService, authData, apiService) {
+    app.service('loginService', ['$http', '$q', 'authenticationService', 'authData', 'apiService','urls',
+        function ($http, $q, authenticationService, authData, apiService,urls) {
             var userInfo;
             var deferred;
             this.login = function (userName, password) {
                 deferred = $q.defer();
                $http({
-			url : 'http://localhost:8080/authenticate',
+			url : urls.BASE_URL+'/authenticate',
 			method : "POST",
 			params : {
 				username : userName,

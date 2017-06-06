@@ -3,9 +3,9 @@
 
     app.controller('applicationGroupListController', applicationGroupListController);
 
-    applicationGroupListController.$inject = ['$scope', 'apiService', 'notificationService', '$ngBootbox', '$filter'];
+    applicationGroupListController.$inject = ['$scope', 'apiService', 'notificationService', '$ngBootbox','urls', '$filter'];
 
-    function applicationGroupListController($scope, apiService, notificationService, $ngBootbox, $filter) {
+    function applicationGroupListController($scope, apiService, notificationService, $ngBootbox,urls, $filter) {
         $scope.loading = true;
         $scope.data = [];
         $scope.page = 0;
@@ -20,14 +20,14 @@
         function deleteMultiple() {
             var listId = [];
             $.each($scope.selected, function (i, item) {
-                listId.push(item.ID);
+                listId.push(item.id);
             });
             var config = {
                 params: {
-                    checkedList: JSON.stringify(listId)
+                    checkedList: listId
                 }
             }
-            apiService.del('api/applicationGroup/deletemulti', config, function (result) {
+            apiService.del('http://localhost:8080/api/applicationGroup/deletemulti', config, function (result) {
                 notificationService.displaySuccess('Xóa thành công ' + result.data + ' bản ghi.');
                 search();
             }, function (error) {
@@ -68,7 +68,7 @@
                             id: id
                         }
                     }
-                    apiService.del('/api/applicationGroup/delete', config, function () {
+                    apiService.del('http://localhost:8080/api/applicationGroup/delete', config, function () {
                         notificationService.displaySuccess('Đã xóa thành công.');
                         search();
                     },
@@ -89,7 +89,7 @@
                 }
             }
 
-            apiService.get('api/applicationGroup/getlistpaging', config, dataLoadCompleted, dataLoadFailed);
+            apiService.get('http://localhost:8080/api/applicationGroup/getlistpaging', config, dataLoadCompleted, dataLoadFailed);
         }
 
         function dataLoadCompleted(result) {

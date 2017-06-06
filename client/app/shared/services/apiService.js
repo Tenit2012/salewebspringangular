@@ -1,8 +1,7 @@
 ﻿(function (app) {
     app.service('apiService', apiService);
-
-    apiService.$inject = ['$http', 'notificationService','authenticationService'];
-    function apiService($http, notificationService, authenticationService) {
+    apiService.$inject = ['$http', 'notificationService','authenticationService','urls'];
+    function apiService($http, notificationService, authenticationService,urls) {
         return {
             get: get,
             post: post,

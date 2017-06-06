@@ -14,7 +14,9 @@
             'uStora.orders',
             'uStora.common'])
         .config(config)
-        .config(configAuthentication);
+        .config(configAuthentication).constant('urls', {
+            BASE_URL: 'http://localhost:8080'
+        });
 
     config.$inject = ['$stateProvider', '$urlRouterProvider'];
 

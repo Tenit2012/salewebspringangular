@@ -11,10 +11,10 @@
         $scope.updateApplicationGroup = updateApplicationGroup;
 
         function updateApplicationGroup() {
-            apiService.put('/api/applicationGroup/update', $scope.group, addSuccessed, addFailed);
+            apiService.put('http://localhost:8080/api/applicationGroup/update', $scope.group, addSuccessed, addFailed);
         }
         function loadDetail() {
-            apiService.get('/api/applicationGroup/detail/' + $stateParams.id, null,
+            apiService.get('http://localhost:8080/api/applicationGroup/detail/' + $stateParams.id, null,
             function (result) {
                 $scope.group = result.data;
                 
@@ -25,7 +25,7 @@
         }
 
         function addSuccessed() {
-            notificationService.displaySuccess($scope.group.Name + ' đã được cập nhật thành công.');
+            notificationService.displaySuccess($scope.group.name + ' đã được cập nhật thành công.');
 
             $location.url('application_groups');
         }
@@ -33,18 +33,18 @@
             notificationService.displayError(response.data.Message);
             notificationService.displayErrorValidation(response);
         }
-        function loadRoles() {
-            apiService.get('/api/applicationRole/getlistall',
-                null,
-                function (response) {
-                    $scope.roles = response.data;
-                }, function (response) {
-                    notificationService.displayError('Không tải được danh sách quyền.');
-                });
-
-        }
-
-        loadRoles();
+//        function loadRoles() {
+//            apiService.get('/api/applicationRole/getlistall',
+//                null,
+//                function (response) {
+//                    $scope.roles = response.data;
+//                }, function (response) {
+//                    notificationService.displayError('Không tải được danh sách quyền.');
+//                });
+//
+//        }
+//
+//        loadRoles();
         loadDetail();
     }
 })(angular.module('uStora.application_groups'));

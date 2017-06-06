@@ -1,8 +1,8 @@
 /// <reference path="../../../Assets/admin/libs/angular/angular.js" />
 (function (app) {
     app.controller('homeController', homeController);
-    homeController.$inject = ['$scope', 'apiService', 'notificationService', '$sce'];
-    function homeController($scope, apiService, notificationService, $sce) {
+    homeController.$inject = ['$scope', 'apiService', 'notificationService', '$sce','urls'];
+    function homeController($scope, apiService, notificationService, $sce,urls) {
         $scope.getItemCount = getItemCount;
         $scope.productsCount = 0;
         $scope.feedbacksCount = 0;
@@ -14,12 +14,12 @@
         $scope.latestProducts = latestProducts;
        
         function latestUsers() {
-            apiService.get('http://localhost:8080/api/users', null, function (res) {
+            apiService.get(urls.BASE_URL+'/api/home/getlatestusers', null, function (res) {
                 $scope.users = res.data;
             });
         }
         function latestProducts() {
-            apiService.get('/api/home/getlatestproducts', null, function (res) {
+            apiService.get(urls.BASE_URL+'/api/home/getlatestproducts', null, function (res) {
                 $scope.products = res.data;
             });
         }
@@ -28,11 +28,11 @@
             return $sce.trustAsHtml(input);
         };
         function getItemCount() {
-            apiService.get('/api/home/gettotalitem', null, function (res) {
-                $scope.productsCount = res.data.TotalProducts;
-                $scope.feedbacksCount = res.data.TotalFeedbacks;
-                $scope.ordersCount = res.data.TotalOrders;
-                $scope.usersCount = res.data.TotalUsers;
+            apiService.get('http://localhost:8080/api/home/gettotalitem', null, function (res) {
+                $scope.productsCount = res.data.totalproduct;
+                $scope.feedbacksCount = res.data.totalfeedback;
+                $scope.ordersCount = res.data.totalOther;
+                $scope.usersCount = res.data.totalUser;
             }, function (res) {
 
             });

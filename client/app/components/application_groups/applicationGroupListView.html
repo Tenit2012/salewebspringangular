@@ -48,14 +48,14 @@
                         </tr>
                         <tr ng-repeat="item in data | filter:filterExpression">
                             <td><input type="checkbox" ng-model="item.checked" name="all" /></td>
-                            <td>{{item.ID}}</td>
-                            <td><a ui-sref="edit_application_group({id:item.ID})">{{item.Name}}</a></td>
+                            <td>{{item.id}}</td>
+                            <td><a ui-sref="edit_application_group({id:item.id})">{{item.name}}</a></td>
                             <td>
-                                {{item.Description}}
+                                {{item.description}}
                             </td>
                             <td>
-                                <button class="btn btn-sm btn-primary" ui-sref="edit_application_group({id:item.ID})"><i class="fa fa-pencil"></i></button>
-                                <button class="btn  btn-sm btn-danger" ng-click="deleteItem(item.ID)"><i class="fa fa-trash"></i></button>
+                                <button class="btn btn-sm btn-primary" ui-sref="edit_application_group({id:item.id})"><i class="fa fa-pencil"></i></button>
+                                <button class="btn  btn-sm btn-danger" ng-click="deleteItem(item.id)"><i class="fa fa-trash"></i></button>
                             </td>
                         </tr>
                         <tfoot>

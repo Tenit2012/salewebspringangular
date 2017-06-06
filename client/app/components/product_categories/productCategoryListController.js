@@ -1,8 +1,8 @@
 ﻿(function (app) {
     app.controller('productCategoryListController', productCategoryListController);
 
-    productCategoryListController.$inject = ['$scope', 'apiService', 'notificationService', '$ngBootbox', '$filter']
-    function productCategoryListController($scope, apiService, notificationService, $ngBootbox, $filter) {
+    productCategoryListController.$inject = ['$scope', 'apiService', 'notificationService', '$ngBootbox', '$filter','urls']
+    function productCategoryListController($scope, apiService, notificationService, $ngBootbox, $filter,urls) {
         $scope.productCategories = [];
         $scope.page = 0;
         $scope.pagesCount = 0;
@@ -22,7 +22,7 @@
               
                 var listId = [];
                 $.each($scope.selected, function (i, item) {
-                    listId.push(item.ID);
+                    listId.push(item.id);
                 });
                 var config = {
                     params: {
@@ -97,7 +97,7 @@
                     pageSize: 5
                 }
             }
-            apiService.get('/api/productcategory/getall', config, function (result) {
+            apiService.get('http://localhost:8080/api/home/getlatestproducts', config, function (result) {
                 $scope.productCategories = result.data.Items;
                 $scope.page = result.data.Page;
                 $scope.pagesCount = result.data.TotalPages;
