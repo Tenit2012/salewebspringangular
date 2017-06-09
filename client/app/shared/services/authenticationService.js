@@ -42,6 +42,17 @@
                     stateService.go('home');
                 }
             };
+            this.setHeaderFile = function () {
+//                delete $http.defaults.headers.common['X-Requested-With'];
+                if ((authData.authenticationData !== undefined) && (authData.authenticationData.accessToken !== undefined) && (authData.authenticationData.accessToken !== null) && (authData.authenticationData.accessToken !== "")) {
+                    $http.defaults.headers.common['Authorization'] = 'Bearer ' + authData.authenticationData.accessToken;
+//                    $http.defaults.headers.common['Content-Type'] = undefined;
+                }
+                else {
+                    var stateService = $injector.get('$state');
+                    stateService.go('home');
+                }
+            };
             this.init();
         }
     ]);

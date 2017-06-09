@@ -56,23 +56,23 @@
                             <td>
                                 <input type="checkbox" name="checkSingle" ng-model="item.checked" />
                             </td>
-                            <td>{{item.ID}}</td>
-                            <td>{{item.Name}}</td>
+                            <td>{{item.id}}</td>
+                            <td>{{item.name}}</td>
                             <td>
-                                {{item.CreatedDate | date:'dd/MM/yyyy hh:mm:ss'}}
+                                {{item.createDate | date:'dd/MM/yyyy'}}
                             </td>
                             <!--class="badge bg-red"-->
                             <td>
-                                <span ng-class="{'badge bg-red':item.Status==false,'badge bg-green':item.Status==true}">
-                                    {{item.Status|statusFilter}}
+                                <span ng-class="{'badge bg-red':item.Status==false,'badge bg-green':item.status==true}">
+                                    {{item.status|statusFilter}}
                                 </span>
                             </td>
                             <td>
-                                <button class="btn btn-sm btn-primary cus-title" ui-sref="edit_product_category({id:item.ID})">
+                                <button class="btn btn-sm btn-primary cus-title" ui-sref="edit_product_category({id:item.id})">
                                     <i class=" fa fa-pencil" data-toggle="tooltip" title="Chỉnh sửa">
                                     </i>
                                 </button>
-                                <button class="btn btn-sm btn-warning cus-title" ng-click="deleteProductCategory(item.ID)">
+                                <button class="btn btn-sm btn-warning cus-title" ng-click="deleteProductCategory(item.id)">
                                     <i class="fa fa-trash" data-toggle="tooltip" title="Xóa"></i>
                                 </button>
                             </td>

@@ -2,9 +2,6 @@
     app.controller('productCategoryEditController', productCategoryEditController);
     productCategoryEditController.$inject = ['apiService', '$scope', 'notificationService', '$state', '$stateParams','commonService'];
     function productCategoryEditController(apiService, $scope, notificationService, $state, $stateParams, commonService) {
-        $scope.productCategory = {
-            UpdatedDate: new Date()
-        }
         $scope.flatFolders = [];
         $scope.loadParentCategories = loadParentCategories;
         $scope.loadProductCategoryDetail = loadProductCategoryDetail;
@@ -32,16 +29,26 @@
         }
 
         function loadProductCategoryDetail() {
-            apiService.get('/api/productcategory/getbyid/' + $stateParams.id, null, function (result) {
+            apiService.get('http://localhost:8080/api/productcategory/detail/' + $stateParams.id, null, function (result) {
                 $scope.productCategory = result.data;
+                var time = result.data.createDate;
+                var date = new Date(time);
+                $scope.productCategory.createDate = date;
             }, function (error) {
-                notificationService.displayError(error.data);
+            	console.log('Không có dữ liệu!!!');
+// notificationService.displayError(error.data);
             });
         }
         function UpdateProductCategory() {
-            apiService.put('/api/productcategory/update', $scope.productCategory,
+        	var file = $scope.myFile;
+			var producCatergory = $scope.productCategory;
+			producCatergory.updateDate = new Date()
+			var fd = new FormData();
+			fd.append('file', file);
+			fd.append('product', JSON.stringify(producCatergory));
+            apiService.postFile('http://localhost:8080/api/productcategory/update', fd,
                 function (result) {
-                    notificationService.displaySuccess('Đã cập nhật ' + result.data.Name + ' thành công');
+                    notificationService.displaySuccess('Đã cập nhật ' + result.data.name + ' thành công');
                     $state.go('product_categories');
                 }, function (error) {
                     console.log(error);
@@ -50,9 +57,9 @@
         }
 
         function loadParentCategories() {
-            apiService.get('/api/productcategory/getallparents', null,
+            apiService.get('http://localhost:8080/api/productcategory/getlistall', null,
                 function (result) {
-                    $scope.parentCategories = commonService.getTree(result.data, "ID", "ParentID");
+                    $scope.parentCategories = commonService.getTree(result.data, "id", "parentId");
                     $scope.parentCategories.forEach(function (item) {
                         recur(item, 0, $scope.flatFolders);
                     });
@@ -70,8 +77,8 @@
         };
         function recur(item, level, arr) {
             arr.push({
-                Name: times(level, '–') + ' ' + item.Name,
-                ID: item.ID,
+                name: times(level, '–') + ' ' + item.name,
+                id: item.id,
                 Level: level,
                 Indent: times(level, '–')
             });

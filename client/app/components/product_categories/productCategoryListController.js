@@ -26,10 +26,10 @@
                 });
                 var config = {
                     params: {
-                        selectedProductCategories: JSON.stringify(listId)
+                    	checkedList: listId
                     }
                 }
-                apiService.del('/api/productcategory/deletemulti', config, function (result) {
+                apiService.del('http://localhost:8080/api/productcategory/deletemulti', config, function (result) {
                     notificationService.displaySuccess('Xóa thành công ' + result.data + ' bản ghi.');
                     search();
                 }, function (error) {
@@ -72,7 +72,7 @@
                         id: id
                     }
                 }
-                apiService.del('/api/productcategory/delete', config, function () {
+                apiService.del('http://localhost:8080/api/productcategory/delete', config, function () {
                     notificationService.displaySuccess('Đã xóa thành công.');
                     search();
                 }, function () {
@@ -97,7 +97,7 @@
                     pageSize: 5
                 }
             }
-            apiService.get('http://localhost:8080/api/home/getlatestproducts', config, function (result) {
+            apiService.get('http://localhost:8080/api/productcategory/getlistpaging', config, function (result) {
                 $scope.productCategories = result.data.Items;
                 $scope.page = result.data.Page;
                 $scope.pagesCount = result.data.TotalPages;

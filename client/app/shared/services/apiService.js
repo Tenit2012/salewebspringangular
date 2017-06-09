@@ -5,7 +5,9 @@
         return {
             get: get,
             post: post,
+            postFile: postFile,
             put: put,
+            putFile: putFile,
             del:del
         }
 
@@ -55,7 +57,44 @@
                     }
             });
         }
-
+        function postFile(url, data,success, failure) {
+        	authenticationService.setHeaderFile();
+        		$http.post(url, data, {
+        			transformRequest : angular.identity,
+        			headers : {
+        				'Content-Type' : undefined
+        			}
+        			}).then(function (result) {
+                    success(result);
+                }, function (error) {
+                    if (error.status === '401') {
+                        notificationService.displayError('Authenticate is required');
+                    }
+                    else
+                        if (failure != null) {
+                            failure(error);
+                        }
+                });
+            }
+        function putFile(url, data,success, failure) {
+        	authenticationService.setHeaderFile();
+        		$http.put(url, data, {
+        			transformRequest : angular.identity,
+        			headers : {
+        				'Content-Type' : undefined
+        			}
+        			}).then(function (result) {
+                    success(result);
+                }, function (error) {
+                    if (error.status === '401') {
+                        notificationService.displayError('Authenticate is required');
+                    }
+                    else
+                        if (failure != null) {
+                            failure(error);
+                        }
+                });
+            }
         function get(url, params, success, failure) {
             authenticationService.setHeader();
             $http.get(url, params).then(function (result) {
